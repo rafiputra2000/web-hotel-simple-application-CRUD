@@ -1,0 +1,74 @@
+<section class="p-5 p-lg-0 pt-lg-5 text-sm-start mt-5 mb-5">
+  <div class="container">
+    <div class="mt-5">
+      <form [formGroup]="bookingGroup" (ngSubmit)="onSubmitReservation()">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Nama Tamu</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            formControlName="name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Email Tamu</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >No Handphone Tamu</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            formControlName="phone"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Nomor Kamar</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            formControlName="roomnumber"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Lama Menginap</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            formControlName="duration"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Jumlah Tamu</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            formControlName="guestcount"
+          />
+        </div>
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
