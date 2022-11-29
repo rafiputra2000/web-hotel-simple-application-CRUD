@@ -25,10 +25,10 @@
             <td>{{ booking.guestCount }}</td>
             <td>{{ booking.status }}</td>
             <td>
-              <button class="btn btn-link btn-sm">
+              <button class="btn btn-link btn-sm" (click)="onCheckIn(booking.id)">
                 <i class="bi bi-check-square mx-2" style="font-size: 1.2rem"></i>
               </button>
-              <button class="btn btn-link btn-sm">
+              <button class="btn btn-link btn-sm" (click)="onCheckOut(booking.id)">
                 <i class="bi bi-clipboard2-x mx-2" style="font-size: 1.2rem"></i>
               </button>
               <button class="btn btn-link btn-sm">

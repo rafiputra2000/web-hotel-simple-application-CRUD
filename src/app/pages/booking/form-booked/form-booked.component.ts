@@ -21,7 +21,7 @@ export class FormBookedComponent implements OnInit{
 
   bookingGroup: FormGroup = new FormGroup({
     id: new FormControl(null),
-    status: new FormControl('reserved'),
+    status: new FormControl(null),
     roomNumber: new FormControl('',[Validators.required]),
     duration: new FormControl(null,[Validators.required]),
     guestCount: new FormControl(null,[Validators.required]),
@@ -41,10 +41,10 @@ export class FormBookedComponent implements OnInit{
     this.hotelBookedService.save(payload).subscribe({
       next:() => {
         this.bookingGroup.reset()
-        alert(`${reservee.name}`)
+        alert(`Tamu ${reservee.name} telah memasan kamar`)
       }
     });
-    this.router.navigateByUrl('booked-list')
+    this.router.navigateByUrl('form-booking')
   }
 
   setFormValue(booking: Book): void {

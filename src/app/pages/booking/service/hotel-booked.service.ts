@@ -18,41 +18,10 @@ export class HotelBookedService implements OnInit{
 
   list(): Observable<Book[]> {
     return new Observable<Book[]>((observer: Observer<Book[]>) => {
-      const sessionBooking = this.storage.getItem('booking') as string
+      const sessionBooking: string = this.storage.getItem('booking') as string
       try {
         if(!sessionBooking){
-          const bookinglist: Book[] = [
-            {
-              id: 1,
-              status: "reserved",
-              roomNumber: '10',
-              duration: 1, // dalam satuan malam, jika 2 berarti 2 malam menginap.
-              guestCount: 2, // jumlah tamu yang menginap dalam 1 kamar
-              reservee:
-                {
-                  id: 1,
-                  name: 'otto',
-                  email: 'otto@gmail.com',
-                  phone: '0987637638'
-                }
-
-          },
-          {
-            id: 2,
-            status: "reserved",
-            roomNumber: '10',
-            duration: 1, // dalam satuan malam, jika 2 berarti 2 malam menginap.
-            guestCount: 2, // jumlah tamu yang menginap dalam 1 kamar
-            reservee:
-              {
-                id: 1,
-                name: 'andika',
-                email: 'andika@gmail.com',
-                phone: '0987637638'
-              }
-
-        }
-          ]
+          const bookinglist: Book[] = []
           this.bookings = bookinglist
         } else {
           this.bookings = JSON.parse(sessionBooking)
@@ -65,10 +34,26 @@ export class HotelBookedService implements OnInit{
     })
   }
 
-  // get(bookingId: number): Observable<Book> {}
+  get(bookingId: number): Observable<Book> {
+    return new Observable<Book>((observer: Observer<Book>) => {
+      try {
+        const sessionStorage: string = this.storage.getItem('booking') as string
+        if (sessionStorage){
+          const bookings: Book[] = JSON.parse(sessionStorage);
+          const book: Book = bookings.find(t => {
+            t.id === bookingId
+          }) as Book
+          observer.next(book)
+        }
+      } catch (err: any) {
+        observer.error(err.message)
+      }
+
+    })
+  }
 
   save(booking: Book): Observable<void> {
-    return new Observable<void>((observer: Observer<void>)=> {
+    return new Observable<void>((observer: Observer<void>) => {
       try {
         if (booking.id) {
           this.bookings = this.bookings.map((t) => {
@@ -76,6 +61,7 @@ export class HotelBookedService implements OnInit{
             return t;
           });
         } else {
+          booking.status = 'reserved'
           booking.id = this.bookings.length + 1;
           this.bookings.push(booking)
           observer.next();
@@ -88,8 +74,37 @@ export class HotelBookedService implements OnInit{
     })
   }
 
-  // checkIn(bookingId: number): Observable<void> {};
-  // checkOut(bookingId: number): Observable<void> {};
+  checkIn(bookingId: number): Observable<void> {
+    return new Observable<void>((observer: Observer<void>) => {
+      try{
+        this.bookings.map(t =>{
+          if(t.id === bookingId) {
+            console.log('checkin', t.status);
+            t.status = 'checked-in'
+          }
+          this.storage.setItem('booking', JSON.stringify(this.bookings))
+          observer.next();
+        })
+      } catch (err:any){
+        observer.error(err.message)
+      }
+    })
+  };
+
+  checkOut(bookingId: number): Observable<void> {
+    return new Observable<void>((observer: Observer<void>) => {
+      try{
+        this.bookings.map(t =>{
+          if(t.id === bookingId)
+          t.status = 'checked-out'
+        })
+        this.storage.setItem('booking', JSON.stringify(this.bookings))
+        observer.next();
+      } catch (err: any){
+        observer.error(err.message)
+      }
+    })
+  };
 
   remove(booked: Book): Observable<Book> {
     return new Observable<Book>((observer: Observer<Book>) => {
