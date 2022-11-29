@@ -81,6 +81,7 @@ export class HotelBookedService implements OnInit{
           observer.next();
         }
         this.storage.setItem('booking', JSON.stringify(this.bookings))
+        console.log('saveService',this.bookings);
       } catch (err: any) {
         observer.error(err.message);
       }

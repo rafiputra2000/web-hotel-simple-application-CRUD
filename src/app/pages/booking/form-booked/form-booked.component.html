@@ -2,7 +2,7 @@
   <div class="container">
     <div class="mt-5">
       <form [formGroup]="bookingGroup" (ngSubmit)="onSubmitReservation()">
-        <div class="mb-3">
+        <div class="mb-3" [formGroupName]="'reservee'">
           <label for="exampleInputEmail1" class="form-label">Nama Tamu</label>
           <input
             type="text"
@@ -12,7 +12,7 @@
             formControlName="name"
           />
         </div>
-        <div class="mb-3">
+        <div class="mb-3" [formGroupName]="'reservee'">
           <label for="exampleInputPassword1" class="form-label"
             >Email Tamu</label
           >
@@ -23,7 +23,7 @@
             formControlName="email"
           />
         </div>
-        <div class="mb-3">
+        <div class="mb-3" [formGroupName]="'reservee'">
           <label for="exampleInputPassword1" class="form-label"
             >No Handphone Tamu</label
           >
@@ -42,7 +42,7 @@
             type="number"
             class="form-control"
             id="exampleInputPassword1"
-            formControlName="roomnumber"
+            formControlName="roomNumber"
           />
         </div>
         <div class="mb-3">
@@ -64,7 +64,7 @@
             type="number"
             class="form-control"
             id="exampleInputPassword1"
-            formControlName="guestcount"
+            formControlName="guestCount"
           />
         </div>
         <button class="btn btn-primary">Submit</button>

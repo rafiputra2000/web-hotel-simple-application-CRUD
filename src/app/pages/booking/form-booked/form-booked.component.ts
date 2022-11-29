@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Book } from '../model/hotel-booked.model';
 import { HotelBookedService } from '../service/hotel-booked.service';
@@ -13,7 +13,7 @@ export class FormBookedComponent implements OnInit{
 
   booking?: Book;
 
-  constructor(private readonly hotelBookedService :HotelBookedService, private readonly router: Router) {}
+  constructor(private readonly hotelBookedService: HotelBookedService, private readonly router: Router) {}
 
   ngOnInit(): void {
 
@@ -21,22 +21,29 @@ export class FormBookedComponent implements OnInit{
 
   bookingGroup: FormGroup = new FormGroup({
     id: new FormControl(null),
-    roomNumber: new FormControl(null),
-    duration: new FormControl(null),
-    guestCount: new FormControl(null),
     status: new FormControl('reserved'),
-    reserve: new FormGroup({
+    roomNumber: new FormControl('',[Validators.required]),
+    duration: new FormControl(null,[Validators.required]),
+    guestCount: new FormControl(null,[Validators.required]),
+    reservee: new FormGroup({
       id: new FormControl(null),
-      name: new FormControl(null),
-      email: new FormControl(null),
-      phone: new FormControl(null),
+      name: new FormControl('',[Validators.required]),
+      email: new FormControl('',[Validators.required]),
+      phone: new FormControl('',[Validators.required]),
     }),
   });
 
   onSubmitReservation(): void{
-    console.log(this.bookingGroup.value);
-    this.hotelBookedService.save(this.bookingGroup.value).subscribe();
-    this.bookingGroup.reset()
+    console.log('submitValue', this.bookingGroup.value);
+    const payload = this.bookingGroup.value;
+    console.log(payload)
+    const { reservee } = payload
+    this.hotelBookedService.save(payload).subscribe({
+      next:() => {
+        this.bookingGroup.reset()
+        alert(`${reservee.name}`)
+      }
+    });
     this.router.navigateByUrl('booked-list')
   }
 
