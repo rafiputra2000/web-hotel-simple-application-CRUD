@@ -42,6 +42,7 @@ export class HotelBookedService implements OnInit{
           const bookings: Book[] = JSON.parse(sessionStorage);
           const book: Book = bookings.find(t => {
             t.id === bookingId
+            return t
           }) as Book
           observer.next(book)
         }
@@ -106,17 +107,16 @@ export class HotelBookedService implements OnInit{
     })
   };
 
-  remove(booked: Book): Observable<Book> {
-    return new Observable<Book>((observer: Observer<Book>) => {
+  remove(booked: number): Observable<void> {
+    return new Observable<void>((observer: Observer<void>) => {
       try{
         for(let index = 0; index < this.bookings.length; index++){
-          if(this.bookings[index].id === booked.id){
-            console.log("index if", index);
+          if(this.bookings[index].id === booked){
             this.bookings.splice(index, 1)
           }
         }
         this.storage.setItem('booking', JSON.stringify(this.bookings))
-        observer.next(booked);
+        observer.next();
         } catch (err: any) {
           observer.error(err.message)
         }
