@@ -59,6 +59,7 @@ export class HotelBookedService implements OnInit{
         if (booking.id) {
           this.bookings = this.bookings.map((t) => {
             if (t.id === booking.id) t = booking;
+            booking.status = 'reserved'
             return t;
           });
         } else {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Book } from '../model/hotel-booked.model';
 import { HotelBookedService } from '../service/hotel-booked.service';
 
@@ -11,8 +12,9 @@ export class BookedListComponent implements OnInit{
 
   bookings: Book[] = []
   booking!: Book;
+  urlLinked: string = "/form-booking"
 
-  constructor(private readonly hotelBookedService :HotelBookedService) {}
+  constructor(private readonly hotelBookedService :HotelBookedService, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.onLoadHotels()
@@ -29,7 +31,15 @@ export class BookedListComponent implements OnInit{
   }
 
 
-  // onReserve(booking: Book): void {}
+  onReserve(booking: Book): void {
+    if (booking.status === 'reserved') {
+        this.router.navigateByUrl(`${this.urlLinked}/${booking.id}`);
+    } else {
+      alert(
+      `Tamu ${booking.reservee.name} sudah melakukan ${booking.status} tidak bisa ubah durasi malam`
+      );
+    }
+  }
 
   //Percobaan not GetById
   // onCheckIn(bookingId: number): void {

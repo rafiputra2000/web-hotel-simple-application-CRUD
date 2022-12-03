@@ -9,6 +9,10 @@ const routes: Routes = [
       component: FormBookedComponent
     },
     {
+      path: 'form-booking/:id',
+      component: FormBookedComponent
+    },
+    {
       path: 'booked-list',
       component: BookedListComponent
     }
